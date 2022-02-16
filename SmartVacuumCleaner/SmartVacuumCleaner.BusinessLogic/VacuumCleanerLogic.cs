@@ -101,7 +101,7 @@ namespace SmartVacuumCleaner.BusinessLogic
         private void OnStep()
         {
             this.MovementNotifier?.Invoke();
-            System.Threading.Thread.Sleep(1);
+            System.Threading.Thread.Sleep(1000);
         }
 
         private bool ValidateDesiredPosition(Coordinate position)

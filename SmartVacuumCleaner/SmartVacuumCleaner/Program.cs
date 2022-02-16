@@ -43,7 +43,12 @@ namespace SmartVacuumCleaner
                 Console.SetCursorPosition(HorizontalConsoleOffset, VerticalConsoleOffset + x);
                 for (int y = 0; y < controller.Map.GetLength(1); y++)
                 {
+                    if (controller.vacuumCleanerLogic.CleanCoordinates.Contains(new Coordinate(x, y)))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                    }
                     Console.Write((controller.Map[x, y] == false ? "x" : "-") + " "); ;
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 Console.Write("\n");
             }

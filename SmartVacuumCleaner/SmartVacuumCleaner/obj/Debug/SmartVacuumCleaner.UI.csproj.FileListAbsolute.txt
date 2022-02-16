@@ -1,0 +1,12 @@
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.exe.config
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.exe
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.pdb
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.Repository.dll
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.Repository.pdb
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\obj\Debug\SmartVacuumCleaner.UI.csprojAssemblyReference.cache
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\obj\Debug\SmartVacuumCleaner.UI.csproj.CoreCompileInputs.cache
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\obj\Debug\SmartVacuumCleaner.UI.csproj.CopyComplete
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\obj\Debug\SmartVacuumCleaner.exe
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\obj\Debug\SmartVacuumCleaner.pdb
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.BusinessLogic.dll
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner\bin\Debug\SmartVacuumCleaner.BusinessLogic.pdb

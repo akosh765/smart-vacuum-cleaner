@@ -1,0 +1,6 @@
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner.Repository\bin\Debug\SmartVacuumCleaner.Repository.dll
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner.Repository\bin\Debug\SmartVacuumCleaner.Repository.pdb
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner.Repository\obj\Debug\SmartVacuumCleaner.Repository.csprojAssemblyReference.cache
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner.Repository\obj\Debug\SmartVacuumCleaner.Repository.csproj.CoreCompileInputs.cache
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner.Repository\obj\Debug\SmartVacuumCleaner.Repository.dll
+D:\Akos\Munka\Evosoft\Assignment\smart-vacuum-cleaner\SmartVacuumCleaner\SmartVacuumCleaner.Repository\obj\Debug\SmartVacuumCleaner.Repository.pdb

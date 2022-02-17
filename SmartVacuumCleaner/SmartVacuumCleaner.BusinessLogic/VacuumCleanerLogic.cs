@@ -1,53 +1,90 @@
-﻿using SmartVacuumCleaner.BusinessLogic.Interfaces;
-using SmartVacuumCleaner.Repository;
-using SmartVacuumCleaner.Repository.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="VacuumCleanerLogic.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace SmartVacuumCleaner.BusinessLogic
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using SmartVacuumCleaner.BusinessLogic.Interfaces;
+    using SmartVacuumCleaner.Repository;
+    using SmartVacuumCleaner.Repository.Utils;
+
+    /// <summary>
+    /// VacuumCleaner logic for the business logic layer.
+    /// </summary>
     public class VacuumCleanerLogic : IVacuumCleanerLogic
     {
-        public event Action MovementNotifier;
-
-        public IVacuumCleanerRepository<IRoom> RobotRepository { get; set; }
-
-        public IRoom Room { get; set; }
-
-        public bool[,] Map { get; set; }
-
-        public List<Coordinate> CleanCoordinates { get; set; }
-
-        public IVacuumCleaner VacuumCleaner { get; set; }
-
         private int orientationCount = 4;
 
-        private int steps = 0;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VacuumCleanerLogic"/> class.
+        /// </summary>
+        /// <param name="robotRepository">The robot repository instance.</param>
         public VacuumCleanerLogic(IVacuumCleanerRepository<IRoom> robotRepository)
         {
             this.RobotRepository = robotRepository;
             this.Room = robotRepository.LoadRoomData(VacuumCleanerConfig.FilePath);
             this.Map = this.Room.Map;
 
-            Coordinate VacuumCleanerStartPositiion = new Coordinate(this.RobotRepository.Room.RobotPosition.X,
+            Coordinate vacuumCleanerStartPositiion = new Coordinate(
+                this.RobotRepository.Room.RobotPosition.X,
                 this.RobotRepository.Room.RobotPosition.Y);
-            this.VacuumCleaner = new VacuumCleaner(VacuumCleanerStartPositiion, Orientation.Upward);
+            this.VacuumCleaner = new VacuumCleaner(vacuumCleanerStartPositiion, Orientation.Upward);
             this.VacuumCleaner.Position.X = this.Room.RobotPosition.X;
             this.VacuumCleaner.Position.Y = this.Room.RobotPosition.Y;
 
             this.CleanCoordinates = new List<Coordinate>();
         }
 
+        /// <summary>
+        /// Event used to notify the view whenever the model changes.
+        /// </summary>
+        public event Action MovementNotifier;
+
+        /// <summary>
+        /// Gets or set the RobotRepository property.
+        /// </summary>
+        public IVacuumCleanerRepository<IRoom> RobotRepository { get; set; }
+
+        /// <summary>
+        /// Gets or sets the room.
+        /// </summary>
+        public IRoom Room { get; set; }
+
+        /// <summary>
+        /// Gets or sets the map's layout.
+        /// </summary>
+        public bool[,] Map { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list containing the clean coordinates.
+        /// </summary>
+        public List<Coordinate> CleanCoordinates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vacuum cleaner object.
+        /// </summary>
+        public IVacuumCleaner VacuumCleaner { get; set; }
+
+        /// <summary>
+        /// The vacuum cleaner starts cleaning the room.
+        /// </summary>
+        /// <returns>The number of cleaned tiles.</returns>
         public int VacuumFloor()
         {
             this.DFS();
-            return CleanCoordinates.Count;
+            return this.CleanCoordinates.Count;
         }
 
+        /// <summary>
+        /// Calculates the position the vacuum cleaner would move to.
+        /// </summary>
+        /// <param name="vacuumCleaner">The vacuum cleaner.</param>
+        /// <returns>The coordinates of the next position.</returns>
         public Coordinate CalculateNextPosition(IVacuumCleaner vacuumCleaner)
         {
             Coordinate displacementValues = (vacuumCleaner as VacuumCleaner).GetDisplacementValuesAccordingToOrientation(vacuumCleaner.Orientation);
@@ -66,23 +103,23 @@ namespace SmartVacuumCleaner.BusinessLogic
                 return;
             }
 
-            //this.CleanCoordinates.Add(new Coordinate(VacuumCleaner.Position.X, VacuumCleaner.Position.Y));
-            CleanPosition(this.VacuumCleaner as VacuumCleaner);
+            // this.CleanCoordinates.Add(new Coordinate(VacuumCleaner.Position.X, VacuumCleaner.Position.Y));
+            this.CleanPosition(this.VacuumCleaner as VacuumCleaner);
 
-            for (int i = 0; i < orientationCount; i++)
+            for (int i = 0; i < this.orientationCount; i++)
             {
-                Coordinate nextPosition = this.CalculateNextPosition(VacuumCleaner);
+                Coordinate nextPosition = this.CalculateNextPosition(this.VacuumCleaner);
                 if (this.ValidateDesiredPosition(nextPosition))
                 {
                     this.VacuumCleaner.Step();
-                    OnStep();
+                    this.OnStep();
 
                     this.DFS();
                     this.VacuumCleaner.TurnCounterClockwise();
                     this.VacuumCleaner.TurnCounterClockwise();
-                    
+
                     this.VacuumCleaner.Step();
-                    OnStep();
+                    this.OnStep();
 
                     this.VacuumCleaner.TurnClockwise();
                     this.VacuumCleaner.TurnClockwise();
@@ -120,7 +157,7 @@ namespace SmartVacuumCleaner.BusinessLogic
 
             bool isEnabled = this.RobotRepository.Room.Map[position.X, position.Y] == true;
 
-            return isInMap && isNotStoredYet && isEnabled;  
+            return isInMap && isNotStoredYet && isEnabled;
         }
     }
 }

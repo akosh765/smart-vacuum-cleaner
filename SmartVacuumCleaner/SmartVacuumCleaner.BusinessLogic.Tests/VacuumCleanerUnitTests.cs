@@ -1,59 +1,81 @@
-﻿using NUnit.Framework;
-using SmartVacuumCleaner.BusinessLogic.Interfaces;
-using SmartVacuumCleaner.Repository.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartVacuumCleaner.BusinessLogic.Tests
+﻿namespace SmartVacuumCleaner.BusinessLogic.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
+    using SmartVacuumCleaner.BusinessLogic.Interfaces;
+    using SmartVacuumCleaner.Repository.Utils;
+
+    /// <summary>
+    /// Test class that provides Unit tests for the functionality of the VacuumCleaner Class.
+    /// </summary>
     [TestFixture]
     public class VacuumCleanerUnitTests
     {
-        public IVacuumCleaner vacuumCleaner;
+        private IVacuumCleaner vacuumCleaner;
 
+        /// <summary>
+        /// Sets up the vacuumCleaner instance before each test.
+        /// </summary>
         [SetUp]
         public void SetUpVacuumCleaner()
         {
-            vacuumCleaner = new VacuumCleaner();
+            this.vacuumCleaner = new VacuumCleaner();
         }
 
+        /// <summary>
+        /// Sets up the instances.
+        /// </summary>
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-
         }
 
+        /// <summary>
+        /// Tears down all resources.
+        /// </summary>
         [TearDown]
         public void TearDown()
         {
-
         }
 
+        /// <summary>
+        /// Tests the constructor of the vacuum cleaner.
+        /// </summary>
+        /// <param name="orientation">Orientation value.</param>
+        /// <param name="x">X value.</param>
+        /// <param name="y">Y value.</param>
         [Test]
         [Category("ConstructorTest")]
         public void ConstructWithParameters_SuccessfullyConstructed(
-            [Values()] Orientation orientation,
+            [Values(Orientation.Right, Orientation.Upward)] Orientation orientation,
             [Range(-2, 2, 1)] int x,
             [Range(-2, 2, 1)] int y)
         {
-            //Arrange
+            // Arrange
             Coordinate startingCoordinate = new Coordinate()
             { X = x,
-              Y = y
+              Y = y,
             };
 
-            //Act
-            vacuumCleaner = new VacuumCleaner(startingCoordinate, orientation);
+            // Act
+            this.vacuumCleaner = new VacuumCleaner(startingCoordinate, orientation);
 
-            //Assert
-            Assert.AreEqual(vacuumCleaner.Position.X, x);
-            Assert.AreEqual(vacuumCleaner.Position.Y, y);
-            Assert.AreEqual(vacuumCleaner.Orientation, orientation);
+            // Assert
+            Assert.AreEqual(this.vacuumCleaner.Position.X, x);
+            Assert.AreEqual(this.vacuumCleaner.Position.Y, y);
+            Assert.AreEqual(this.vacuumCleaner.Orientation, orientation);
         }
 
+        /// <summary>
+        /// Tests the displacement values of the vacuum cleaner.
+        /// </summary>
+        /// <param name="orientation">Orientation.</param>
+        /// <param name="expectedX">Expected result X coordinate.</param>
+        /// <param name="expectedY">Expected result Y coordinate.</param>
         [Category("MovementTest")]
         [TestCase(Orientation.Upward, -1, 0)]
         [TestCase(Orientation.Downward, 1, 0)]
@@ -61,17 +83,24 @@ namespace SmartVacuumCleaner.BusinessLogic.Tests
         [TestCase(Orientation.Right, 0, 1)]
         public void GetDisplacementValues_GetsDisplacementValuesAccordingToOrientation(Orientation orientation, int expectedX, int expectedY)
         {
-            //Arrange
-            //Act
-            Coordinate actualDisplacement = (vacuumCleaner as VacuumCleaner)
+            // Arrange
+            // Act
+            Coordinate actualDisplacement = (this.vacuumCleaner as VacuumCleaner)
                 .GetDisplacementValuesAccordingToOrientation(orientation);
 
-            //Assert
+            // Assert
             Assert.AreEqual(actualDisplacement.X, expectedX);
             Assert.AreEqual(actualDisplacement.Y, expectedY);
         }
 
-
+        /// <summary>
+        /// Tests the movement of the vacuum cleaner.
+        /// </summary>
+        /// <param name="orientation">Orientation.</param>
+        /// <param name="startX">Start X coordinate.</param>
+        /// <param name="startY">Start Y coordinate.</param>
+        /// <param name="destX">Destination X coordinate.</param>
+        /// <param name="destY">Destination Y coordinate.</param>
         [Category("MovementTest")]
         [TestCase(Orientation.Upward, 0, 0, -1, 0)]
         [TestCase(Orientation.Downward, 0, 0, 1, 0)]
@@ -79,20 +108,24 @@ namespace SmartVacuumCleaner.BusinessLogic.Tests
         [TestCase(Orientation.Right, 0, 0, 0, 1)]
         public void Step_TakesStepAccordingToOrientation(Orientation orientation, int startX, int startY, int destX, int destY)
         {
-            //Arrange
-            vacuumCleaner.Orientation = orientation;
-            vacuumCleaner.Position = new Coordinate(startX, startY);
+            // Arrange
+            this.vacuumCleaner.Orientation = orientation;
+            this.vacuumCleaner.Position = new Coordinate(startX, startY);
 
-            //Act
-            vacuumCleaner.Step();
+            // Act
+            this.vacuumCleaner.Step();
 
-            //Assert
-            Assert.AreEqual(vacuumCleaner.Orientation, orientation);
-            Assert.AreEqual(vacuumCleaner.Position.X, destX);
-            Assert.AreEqual(vacuumCleaner.Position.Y, destY);
+            // Assert
+            Assert.AreEqual(this.vacuumCleaner.Orientation, orientation);
+            Assert.AreEqual(this.vacuumCleaner.Position.X, destX);
+            Assert.AreEqual(this.vacuumCleaner.Position.Y, destY);
         }
 
-
+        /// <summary>
+        /// Tests the change of orientation.
+        /// </summary>
+        /// <param name="currentOrientation">Current orientation.</param>
+        /// <param name="expectedOrientation">Expected result orientation.</param>
         [Category("OrientationTest")]
         [TestCase(Orientation.Upward, Orientation.Right)]
         [TestCase(Orientation.Right, Orientation.Downward)]
@@ -100,17 +133,22 @@ namespace SmartVacuumCleaner.BusinessLogic.Tests
         [TestCase(Orientation.Left, Orientation.Upward)]
         public void TurnClockwise_OrientationChangesCorrectly(Orientation currentOrientation, Orientation expectedOrientation)
         {
-            //Arrange
-            vacuumCleaner.Orientation = currentOrientation;
+            // Arrange
+            this.vacuumCleaner.Orientation = currentOrientation;
 
-            //Act
-            vacuumCleaner.TurnClockwise();
-            Orientation actualOrientation = vacuumCleaner.Orientation;
+            // Act
+            this.vacuumCleaner.TurnClockwise();
+            Orientation actualOrientation = this.vacuumCleaner.Orientation;
 
-            //Assert
+            // Assert
             Assert.AreEqual(actualOrientation, expectedOrientation);
         }
 
+        /// <summary>
+        /// Tests the change of orientation.
+        /// </summary>
+        /// <param name="currentOrientation">Current orientation.</param>
+        /// <param name="expectedOrientation">Expected result orientation.</param>
         [Category("OrientationTest")]
         [TestCase(Orientation.Upward, Orientation.Left)]
         [TestCase(Orientation.Left, Orientation.Downward)]
@@ -118,14 +156,14 @@ namespace SmartVacuumCleaner.BusinessLogic.Tests
         [TestCase(Orientation.Right, Orientation.Upward)]
         public void TurnCounterClockwise_OrientationChangesCorrectly(Orientation currentOrientation, Orientation expectedOrientation)
         {
-            //Arrange
-            vacuumCleaner.Orientation = currentOrientation;
+            // Arrange
+            this.vacuumCleaner.Orientation = currentOrientation;
 
-            //Act
-            vacuumCleaner.TurnCounterClockwise();
-            Orientation actualOrientation = vacuumCleaner.Orientation;
+            // Act
+            this.vacuumCleaner.TurnCounterClockwise();
+            Orientation actualOrientation = this.vacuumCleaner.Orientation;
 
-            //Assert
+            // Assert
             Assert.AreEqual(actualOrientation, expectedOrientation);
         }
     }

@@ -1,20 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartVacuumCleaner.Repository
+﻿namespace SmartVacuumCleaner.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Class that implements the IVacuumCleanerRepository interface and stores the map and the current coordinates of the vacuum cleaner.
+    /// </summary>
     public class VacuumCleanerRepository : IVacuumCleanerRepository<IRoom>
     {
-        public IRoom Room { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VacuumCleanerRepository"/> class.
+        /// </summary>
         public VacuumCleanerRepository()
         {
         }
 
+        /// <summary>
+        /// Gets or sets the Room property.
+        /// </summary>
+        public IRoom Room { get; set; }
+
+        /// <summary>
+        /// Loads a map from a text file and constructs a Room instance.
+        /// </summary>
+        /// <param name="filepath">The filepath to the txt file</param>
+        /// <returns>IRoom instance.</returns>
         public IRoom LoadRoomData(string filepath)
         {
             StreamReader mapReader = new StreamReader(VacuumCleanerConfig.FilePath, Encoding.UTF8);

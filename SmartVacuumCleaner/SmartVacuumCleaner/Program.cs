@@ -1,23 +1,30 @@
-﻿using SmartVacuumCleaner.BusinessLogic;
-using SmartVacuumCleaner.BusinessLogic.Interfaces;
-using SmartVacuumCleaner.Repository;
-using SmartVacuumCleaner.Repository.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartVacuumCleaner
+﻿namespace SmartVacuumCleaner
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using SmartVacuumCleaner.BusinessLogic;
+    using SmartVacuumCleaner.BusinessLogic.Interfaces;
+    using SmartVacuumCleaner.Repository;
+    using SmartVacuumCleaner.Repository.Utils;
+
+    /// <summary>
+    /// Main class of the program.
+    /// </summary>
     public class Program
     {
-        private static RobotController controller;
         private const int CharacterOffset = 2;
         private const int HorizontalConsoleOffset = 10;
         private const int VerticalConsoleOffset = 3;
+        private static RobotController controller;
 
-        static void Main(string[] args)
+        /// <summary>
+        /// Entroy point of the program.
+        /// </summary>
+        /// <param name="args">Args.</param>
+        public static void Main(string[] args)
         {
             IVacuumCleanerLogic logic = new VacuumCleanerLogic(new VacuumCleanerRepository());
             controller = new RobotController(logic);
@@ -47,13 +54,16 @@ namespace SmartVacuumCleaner
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
+
                     Console.Write((controller.Map[x, y] == false ? "x" : "-") + " "); ;
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+
                 Console.Write("\n");
             }
 
-            Console.SetCursorPosition(HorizontalConsoleOffset + controller.RobotPosition.Y * CharacterOffset,
+            Console.SetCursorPosition(
+                HorizontalConsoleOffset + (controller.RobotPosition.Y * CharacterOffset),
                 VerticalConsoleOffset + controller.RobotPosition.X);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("o");
